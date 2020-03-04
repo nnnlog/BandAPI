@@ -1,0 +1,14 @@
+{
+  "name": "naver_band",
+  "version": "0.0.1",
+  "description": "API for Band (https://band.us)",
+  "author": {
+    "name": "nlog",
+    "email": "sorisem4106@naver.com",
+    "url": "https://github.com/nnnlog/"
+  },
+  "homepage": "https://github.com/nnnlog/BandAPI/",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
