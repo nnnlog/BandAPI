@@ -1,4 +1,3 @@
-const api = new (require("../index"))("", "");
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -6,10 +5,11 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-rl.question(api.getRedirectURI("https://nnnlog.azurewebsites.net/band/") + "\nType your code :", ans => {
-	api.getToken(ans).then(d => {
-		console.log(d);
-		process.exit(0);
-	}).catch(e => console.log(e));
-
+rl.question("Type your access token :", token => {
+	rl.question("Type band_key (optional) :", key => {
+		(new (require("../index"))("", "", token.trim())).getProfile(key.trim() === "" ? null : key.trim()).then(d => {
+			console.log(d);
+			process.exit(0);
+		}).catch(e => console.log(e));
+	});
 });

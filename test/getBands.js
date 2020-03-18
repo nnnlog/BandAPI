@@ -5,13 +5,9 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-console.log(null);
-
 rl.question("Type your access token :", token => {
-	rl.question("Type band_key (optional) :", key => {
-		(new (require("../index"))("", "", token.trim())).getProfile(key.trim() === "" ? null : key.trim()).then(d => {
-			console.log(d);
-			process.exit(0);
-		}).catch(e => console.log(e));
-	});
+	(new (require("../index"))("", "", token.trim())).getBands().then(d => {
+		console.log(require("util").inspect(d, true, null, true));
+		process.exit(0);
+	}).catch(e => console.log(e));
 });

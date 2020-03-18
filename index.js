@@ -134,23 +134,95 @@ class BandAPI {
 	 * @link https://developers.band.us/develop/guide/api/get_posts
 	 *
 	 * @var {string}        band_key       게시글을 가져올 밴드 식별자
+	 * @var {null|string}   next_paging    다음 페이징 호출용 파라미터 정보
 	 * @var {null|string}   locale         국가 및 언어 (ex. en_US)
 	 *
 	 * @returns {Promise<Object>}
 	 */
-	getPosts(band_key, locale = null) {
+	getPosts(band_key, next_paging = null, locale = null) {
 		return new Promise((resolve, reject) => {
 			api.get("/v2/band/posts", {
 				params: {
 					access_token: this._access_token,
 					band_key: band_key,
-					locale: locale
+					locale: locale,
+					limit: 20,
+					after: next_paging
 				}
 			}).then(res => {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
 						resolve(data); //TODO: return Post[]
+						return;
+					}
+					reject(res); //TODO: return Error instance
+				} catch (e) {
+					reject(e);
+				}
+			})
+		});
+	}
+
+	/**
+	 * 특정 글의 상세 정보를 조회합니다.
+	 * @link https://developers.band.us/develop/guide/api/get_post
+	 *
+	 * @var {string}    band_key       게시글을 가져올 밴드 식별자
+	 * @var {string}    post_key       글 식별자
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	getPost(band_key, post_key) {
+		return new Promise((resolve, reject) => {
+			api.get("/v2.1/band/post", {
+				params: {
+					access_token: this._access_token,
+					band_key: band_key,
+					post_key: post_key
+				}
+			}).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data); //TODO: return Post
+						return;
+					}
+					reject(res); //TODO: return Error instance
+				} catch (e) {
+					reject(e);
+				}
+			})
+		});
+	}
+
+	/**
+	 * 특정 글에 달린 댓글 목록을 조회합니다.
+	 * @link https://developers.band.us/develop/guide/api/get_comments
+	 *
+	 * @var {string}        band_key       게시글을 가져올 밴드 식별자
+	 * @var {string}        post_key       글 식별자
+	 * @var {boolean}       sort           정렬 종류 (true: 생성순 정렬, false: 최신순 정렬)
+	 * @var {null|string}   next_paging    다음 페이징 호출용 파라미터 정보
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	getComments(band_key, post_key, sort = true, next_paging = null) {
+		return new Promise((resolve, reject) => {
+			api.get("/v2/band/post/comments", {
+				params: {
+					access_token: this._access_token,
+					band_key: band_key,
+					post_key: post_key,
+					sort: `${sort ? "+" : "-"}created_at`,
+					limit: 20,
+					after: next_paging
+				}
+			}).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data); //TODO: return Comment[]
 						return;
 					}
 					reject(res); //TODO: return Error instance
