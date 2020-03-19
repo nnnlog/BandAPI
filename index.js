@@ -98,7 +98,7 @@ class BandAPI {
 				} catch (e) {
 					reject(e);
 				}
-			})
+			}).catch(e => reject(e.response.data));
 		});
 	}
 
@@ -125,7 +125,7 @@ class BandAPI {
 				} catch (e) {
 					reject(e);
 				}
-			})
+			}).catch(e => reject(e.response.data));
 		});
 	}
 
@@ -160,7 +160,7 @@ class BandAPI {
 				} catch (e) {
 					reject(e);
 				}
-			})
+			}).catch(e => reject(e.response.data));
 		});
 	}
 
@@ -192,7 +192,7 @@ class BandAPI {
 				} catch (e) {
 					reject(e);
 				}
-			})
+			}).catch(e => reject(e.response.data));
 		});
 	}
 
@@ -229,7 +229,40 @@ class BandAPI {
 				} catch (e) {
 					reject(e);
 				}
-			})
+			}).catch(e => reject(e.response.data));
+		});
+	}
+
+	/**
+	 * 특정 밴드의 앨범목록을 조회합니다.
+	 * @link https://developers.band.us/develop/guide/api/get_albums
+	 *
+	 * @var {string}        band_key       밴드 식별자
+	 * @var {null|string}   next_paging    다음 페이징 호출용 파라미터 정보
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	getAlbums(band_key, next_paging = null) {
+		return new Promise((resolve, reject) => {
+			api.get("/v2/band/albums", {
+				params: {
+					access_token: this._access_token,
+					band_key: band_key,
+					limit: 20,
+					after: next_paging
+				}
+			}).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data); //TODO: return Photo[]
+						return;
+					}
+					reject(res); //TODO: return Error instance
+				} catch (e) {
+					reject(e);
+				}
+			}).catch(e => reject(e.response.data));
 		});
 	}
 

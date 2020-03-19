@@ -16,8 +16,7 @@ rl.question("Type your access token :", token => {
 						after.trim() === "" ? null : after.trim()
 				).then(d => {
 					console.log(require("util").inspect(d, true, null, true));
-					process.exit(0);
-				}).catch(e => console.log(e));
+				}).catch(e => console.log(e)).finally(() => process.exit(0));
 			});
 		});
 	});

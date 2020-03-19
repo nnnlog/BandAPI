@@ -10,8 +10,7 @@ rl.question("Type your access token :", token => {
 		rl.question("Type post_key :", post => {
 			(new (require("../index"))("", "", token.trim())).getPost(key.trim() === "" ? null : key.trim(), post.trim() === "" ? null : post.trim()).then(d => {
 				console.log(require("util").inspect(d, true, null, true));
-				process.exit(0);
-			}).catch(e => console.log(e));
+			}).catch(e => console.log(e)).finally(() => process.exit(0));
 		});
 	});
 });

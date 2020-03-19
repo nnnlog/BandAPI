@@ -9,7 +9,6 @@ const rl = readline.createInterface({
 rl.question(api.getRedirectURI("https://nnnlog.azurewebsites.net/band/") + "\nType your code :", ans => {
 	api.getToken(ans).then(d => {
 		console.log(d);
-		process.exit(0);
-	}).catch(e => console.log(e));
+	}).catch(e => console.log(e)).finally(() => process.exit(0));
 
 });

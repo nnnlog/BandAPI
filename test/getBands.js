@@ -8,6 +8,5 @@ const rl = readline.createInterface({
 rl.question("Type your access token :", token => {
 	(new (require("../index"))("", "", token.trim())).getBands().then(d => {
 		console.log(require("util").inspect(d, true, null, true));
-		process.exit(0);
-	}).catch(e => console.log(e));
+	}).catch(e => console.log(e)).finally(() => process.exit(0));
 });
