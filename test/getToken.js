@@ -1,4 +1,4 @@
-const api = new (require("../index"))("", "");
+const api = new (require("../src"))("", "");
 const readline = require("readline");
 
 const rl = readline.createInterface({

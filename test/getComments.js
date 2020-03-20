@@ -9,7 +9,7 @@ rl.question("Type your access token :", token => {
 	rl.question("Type band_key :", key => {
 		rl.question("Type post_key :", post => {
 			rl.question("Type after of next_paging (nullable) :", after => {
-				(new (require("../index"))("", "", token.trim())).getComments(
+				(new (require("../src"))("", "", token.trim())).getComments(
 						key.trim() === "" ? null : key.trim(),
 						post.trim() === "" ? null : post.trim(),
 						true,
