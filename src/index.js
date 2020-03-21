@@ -6,6 +6,8 @@ const api = axios.create({
 	baseURL: "https://openapi.band.us/"
 });
 
+const querystring = require("querystring");
+
 class BandAPI {
 
 	/**
@@ -186,6 +188,68 @@ class BandAPI {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
 						resolve(data); //TODO: return Post
+						return;
+					}
+					reject(res); //TODO: return Error instance
+				} catch (e) {
+					reject(e);
+				}
+			}).catch(e => reject(e.response.data));
+		});
+	}
+
+	/**
+	 * 특정 밴드에 글을 작성합니다.
+	 * @link https://developers.band.us/develop/guide/api/write_post
+	 *
+	 * @var {string}    band_key       밴드 식별자
+	 * @var {string}    content        본문 내용
+	 * @var {boolean}   do_push        수신 설정된 멤버에게 푸시와 새소식 전달
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	writePost(band_key, content, do_push = false) {
+		return new Promise((resolve, reject) => { //왜 주소의 쿼리로만 데이터를 수신받는지 모르겠다.
+			api.post(`/v2.2/band/post/create?${querystring.stringify({
+				access_token: this._access_token,
+				band_key: band_key,
+				content: content,
+				do_push: !!+do_push
+			})}`).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data); //TODO: return PostResult
+						return;
+					}
+					reject(res); //TODO: return Error instance
+				} catch (e) {
+					reject(e);
+				}
+			}).catch(e => reject(e.response.data));
+		});
+	}
+
+	/**
+	 * 특정 글을 삭제하는 API 입니다.
+	 * @link https://developers.band.us/develop/guide/api/remove_post
+	 *
+	 * @var {string}    band_key       밴드 식별자
+	 * @var {string}    post_key       글 식별자
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	deletePost(band_key, post_key) {
+		return new Promise((resolve, reject) => {
+			api.post(`/v2/band/post/remove?${querystring.stringify({
+				access_token: this._access_token,
+				band_key: band_key,
+				post_key: post_key
+			})}`).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data); //TODO: return PostResult
 						return;
 					}
 					reject(res); //TODO: return Error instance

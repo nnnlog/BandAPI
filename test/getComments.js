@@ -10,8 +10,8 @@ rl.question("Type your access token :", token => {
 		rl.question("Type post_key :", post => {
 			rl.question("Type after of next_paging (nullable) :", after => {
 				(new (require("../src"))("", "", token.trim())).getComments(
-						key.trim() === "" ? null : key.trim(),
-						post.trim() === "" ? null : post.trim(),
+						key.trim(),
+						post.trim(),
 						true,
 						after.trim() === "" ? null : after.trim()
 				).then(d => {

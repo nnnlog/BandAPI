@@ -7,12 +7,12 @@ const rl = readline.createInterface({
 
 rl.question("Type your access token :", token => {
 	rl.question("Type band_key :", key => {
-		rl.question("Type album_key :", album_key => {
-			rl.question("Type after of next_paging (nullable) :", after => {
-				(new (require("../src"))("", "", token.trim())).getPhotos(
+		rl.question("Type post content :", content => {
+			rl.question("Type do_push (0/1) :", do_push => {
+				(new (require("../src"))("", "", token.trim())).writePost(
 						key.trim(),
-						album_key.trim() === "" ? null : album_key.trim(),
-						after.trim() === "" ? null : after.trim(),
+						content.trim(),
+						!!+do_push
 				).then(d => {
 					console.log(require("util").inspect(d, true, null, true));
 				}).catch(e => console.log(e)).finally(() => process.exit(0));

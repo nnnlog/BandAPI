@@ -7,10 +7,10 @@ const rl = readline.createInterface({
 
 rl.question("Type your access token :", token => {
 	rl.question("Type band_key :", key => {
-		rl.question("Type after of next_paging (nullable) :", after => {
-			(new (require("../src"))("", "", token.trim())).getAlbums(
+		rl.question("Type post_key :", post_key => {
+			(new (require("../src"))("", "", token.trim())).deletePost(
 					key.trim(),
-					after.trim() === "" ? null : after.trim()
+					post_key.trim(),
 			).then(d => {
 				console.log(require("util").inspect(d, true, null, true));
 			}).catch(e => console.log(e)).finally(() => process.exit(0));
