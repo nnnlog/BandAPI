@@ -1,9 +1,9 @@
 {
-  "name": "naver_band",
+  "name": "naver-band-api",
   "version": "0.0.1",
   "description": "API for Band (https://band.us)",
   "author": {
-    "name": "nlog",
+    "name": "엔로그",
     "email": "sorisem4106@naver.com",
     "url": "https://github.com/nnnlog/"
   },

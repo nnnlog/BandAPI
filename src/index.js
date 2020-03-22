@@ -67,7 +67,7 @@ class BandAPI {
 						resolve(data.access_token);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -93,10 +93,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Profile instance
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -120,10 +120,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Band[]
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -155,10 +155,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Post[]
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -187,10 +187,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Post
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -219,10 +219,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return PostResult
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -249,10 +249,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return PostResult
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -286,10 +286,74 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Comment[]
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
+				} catch (e) {
+					reject(e);
+				}
+			}).catch(e => reject(e.response.data));
+		});
+	}
+
+	/**
+	 * 특정 밴드에 댓글을 작성합니다.
+	 * @link https://developers.band.us/develop/guide/api/write_comment
+	 *
+	 * @var {string}    band_key       밴드 식별자
+	 * @var {string}    post_key       글 식별자
+	 * @var {string}    body           본문 내용
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	writeComment(band_key, post_key, body) {
+		return new Promise((resolve, reject) => {
+			api.post(`/v2/band/post/comment/create?${querystring.stringify({
+				access_token: this._access_token,
+				band_key: band_key,
+				post_key: post_key,
+				body: body
+			})}`).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data);
+						return;
+					}
+					reject(res);
+				} catch (e) {
+					reject(e);
+				}
+			}).catch(e => reject(e.response.data));
+		});
+	}
+
+	/**
+	 * 특정 댓글을 삭제합니다. 동일한 Client ID에서 작성된 댓글을 삭제할 수 있습니다.
+	 * @link https://developers.band.us/develop/guide/api/remove_comment
+	 *
+	 * @var {string}    band_key       밴드 식별자
+	 * @var {string}    post_key       글 식별자
+	 * @var {string}    comment_key    댓글 식별자
+	 *
+	 * @returns {Promise<Object>}
+	 */
+	deleteComment(band_key, post_key, comment_key) {
+		return new Promise((resolve, reject) => {
+			api.post(`/v2/band/post/comment/remove?${querystring.stringify({
+				access_token: this._access_token,
+				band_key: band_key,
+				post_key: post_key,
+				comment_key: comment_key
+			})}`).then(res => {
+				try {
+					let data = res.data;
+					if (data !== undefined && data.result_code === 1) {
+						resolve(data);
+						return;
+					}
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -320,10 +384,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Comment[]
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -353,10 +417,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Photo[]
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
@@ -388,10 +452,10 @@ class BandAPI {
 				try {
 					let data = res.data;
 					if (data !== undefined && data.result_code === 1) {
-						resolve(data); //TODO: return Photo[]
+						resolve(data);
 						return;
 					}
-					reject(res); //TODO: return Error instance
+					reject(res);
 				} catch (e) {
 					reject(e);
 				}
